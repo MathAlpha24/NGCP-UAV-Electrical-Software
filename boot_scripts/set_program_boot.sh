@@ -26,13 +26,13 @@ fi
 if [ -z "$1" ]; then 
 # Check if the argument ($1) if passed as a string has zero characters (-z). 
 # If true, run error comment below and exit.
-    echo "ERROR: Program path not provided as arguement." 
+    echo "ERROR: Program path not provided as argument." 
     echo "SOLUTION: Please copy and paste path to program."
     exit 1
 fi
 
 # 2c. Check if program path is valid (aka does the program even exist?)
-if [ ! -x "$PROGRAM_PATH" ] then
+if [ ! -x "$PROGRAM_PATH" ]; then
 # Check if the program "PROGRAM_PATH" is NOT (!) executable (-x).
 # If true, run error comment below and exit.
     echo "ERROR: Program at the path is not executable."
@@ -88,6 +88,7 @@ User=root
 WantedBy=multi-user.target
 EOF
 
+chmod 755 "$SERVICE_FILE"
 
 # --------------------------------------- 
 # 4. ENABLE & START SERVICE
