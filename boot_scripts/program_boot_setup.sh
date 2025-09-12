@@ -13,7 +13,9 @@
 set -e 
 #set script to exit if any uncontrollable errors occur
 
+# argument 1 is the action to be taken
 ACTION="$1"
+#argumetent 2 is the path of the program that wants to be run at boot.
 PROGRAM_PATH="$2"
 
 if [[ "$ACTION" != "add" && "$ACTION" != "remove" && "$ACTION" != "reenable" ]]; then
