@@ -26,4 +26,8 @@ TBD
 
 
 ## How to Set up Raspberry Pi 4
-
+**Install Ubuntu Desktop 24.04.03 LETS (64-bit)**
+You will also need:
+- Monitor
+  MicroHDMI to video cable
+1. Connect to the internet
