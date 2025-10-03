@@ -42,12 +42,12 @@ fi
 
 if [[ "$ACTION" == "clean_install" || "$ACTION" == "install" ]]; then
 
-    wget https://raw.githubusercontent.com/krakenrf/krakensdr_docs/main/install_scripts/krakensdr_aarch64_install_doa.sh
-    sudo chmod +x krakensdr_aarch64_install_doa.sh
+    wget -O ~/krakensdr_aarch64_install_doa.sh https://raw.githubusercontent.com/krakenrf/krakensdr_docs/main/install_scripts/krakensdr_aarch64_install_doa.sh
+
 
 
 fi
 
 #regardless of action, run script:
-./krakensdr_aarch64_install_doa.sh
-
+sudo chmod +x ~/krakensdr_aarch64_install_doa.sh
+~/krakensdr_aarch64_install_doa.sh
