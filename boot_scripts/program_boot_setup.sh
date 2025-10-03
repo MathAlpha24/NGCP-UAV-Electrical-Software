@@ -10,20 +10,30 @@
 #   Re-enable a previously disabled service:
 #     sudo ./service_manager.sh reenable /full/path/to/program
 
+
 set -e 
 #set script to exit if any uncontrollable errors occur
+
+#--------------------------
+# 1. SET VARIABLES
 
 # argument 1 is the action to be taken
 ACTION="$1"
 #argumetent 2 is the path of the program that wants to be run at boot.
 PROGRAM_PATH="$2"
 
+# ----------------------------------------------------
+# 2. ERROR HANDLING 
+
+
+# if arguement 1 is not "add", "remove" or "reenable" then exit.
 if [[ "$ACTION" != "add" && "$ACTION" != "remove" && "$ACTION" != "reenable" ]]; then
     echo "ERROR: Invalid action '$ACTION'." 
     echo "SOLUTION: Use 'add', 'remove', or 'reenable'."
     exit 1
 fi
 
+#i f the program path for argument 2 ($2)
 if [[ -z "$PROGRAM_PATH" ]]; then
     echo "ERROR: Program path argument missing."
     exit 1

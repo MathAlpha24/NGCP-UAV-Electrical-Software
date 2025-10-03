@@ -7,6 +7,11 @@ Git database for Cal Poly Pomona NGCP UAV Electrical Software Team 2025-2026
 ```
 https://github.com/MathAlpha24/NGCP-UAV-Electrical-Software
 ```
+Use this if you want to fork from Bryan-branch.
+```
+https://github.com/MathAlpha24/NGCP-UAV-Electrical-Software/tree/Bryan-branch
+```
+
 ### MavSDK Github
 ```
 https://github.com/mavlink/MAVSDK-Python
