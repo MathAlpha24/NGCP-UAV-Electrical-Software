@@ -9,18 +9,11 @@ PROGRAM_PATH="$1"
 
 # 1b. Get the name of the program from the path.
 PROGRAM_NAME=$(basename "$PROGRAM_PATH")
+AUTOSTART_DIR="$HOME/.config/autostart"
+DESKTOP_FILE="$AUTOSTART_DIR/${PROGRAM_NAME}.desktop"
 
 # --------------------------------------- 
 # 2. ERROR HANDLING
-
-# 2a. Check if set_program_boot.sh is being run in root.
-if [[ $EUID -ne 0 ]]; then
-# Check if Effective User ID - user running command (EUID)- does NOT (-ne) equal root user ID (always 0).
-# If true, run error comment below and exit.
-  echo "ERROR: Program not being run in root."
-  echo "SOLUTION: Please run this script as root (use sudo)"
-  exit 1
-fi
 
 # 2b. Check if program is in argument.
 if [ -z "$1" ]; then 
@@ -41,74 +34,31 @@ if [ ! -x "$PROGRAM_PATH" ]; then
 fi
 
 # --------------------------------------- 
-# 3. SYSTEMMD SERVICE FILE CREATOPM
+# 3. STARUP FILE USER SERVICE FILE CREATOPM
 
-# 3a. Create systemmd service file.
-SERVICE_FILE="/etc/systemd/system/$PROGRAM_NAME.service"
-echo "Creating systemd service at $SERVICE_FILE..."
+mkdir -p "$AUTOSTART_DIR"
 
-# 3b. Check if the service file already exists
-if [ -f "$SERVICE_FILE" ]; then 
-# Check (-f) if name of the system service file ("$SERVICE FILE") already is there. 
-# If true, then assume the system file is already is already set up and run bash script below.
-    echo "WARNING: The service file '$SERVICE_FILE' already exists."
+# 3c. Set the program to run at user-space startup
+cat > "$DESKTOP_FILE" <<EOF
 
-    while true; do #only way to exit the while loop is to type in a valid input due to lack of a while loop parameter.
-        # Ask user whether to overwrite
-        read -p "Do you want to overwrite it? (y/n): " answer
-        #Wait for user to type in Y/y or N/n (to ensure its not caps sensetive.)
-        case "$answer" in
-            [Yy]* )
-                echo "Overwriting existing service file..."
-                break
-                ;;
-            [Nn]* )
-                echo "Aborting setup. No changes made."
-                exit 0
-                ;;
-            * )
-                echo "Invalid input. Please enter y or n."
-                ;;
-        esac
-    done
-fi
+[Desktop Entry]
+Type=Application
+Exec=gnome-terminal -- $PROGRAM_PATH
+Hidden=false
+NoDisplay=false
+X-GNOME-Autostart-enabled=true
+Name=$PROGRAM_NAME
+Comment=Autostart $PROGRAM_NAME at login
 
-# 3c. Write the systemd service unit file
-cat > "$SERVICE_FILE" <<EOF
-[Unit]
-Description=Run $PROGRAM_NAME at startup
-After=network.target
-
-[Service]
-ExecStart=$PROGRAM_PATH
-Restart=always
-User=root
-
-[Install]
-WantedBy=multi-user.target
 EOF
 
-chmod 755 "$SERVICE_FILE"
+chmod 755 "$DESKTOP_FILE"
 
 # --------------------------------------- 
-# 4. ENABLE & START SERVICE
+# 4. END SCRIPT
 
-# 4a. Reload systemd to recognize the new service
-#Systemctl is the commandline tool to manage systemd services.
-#First replaces current systemd process with fresh systemd process 
-systemctl daemon-reexec
-
-#Reloads all unit files without restarting systemd
-systemctl daemon-reload
-
-# 4b.  Enable the service to run at boot
-# This creates a symlink from your service to the appropriate boot target.
-systemctl enable "$PROGRAM_NAME.service"
-echo "'$PROGRAM_NAME' has been set to run at boot"
-
-
-# --------------------------------------- 
-#5. END SCRIPT
+echo "$PROGRAM_NAME' has been set to run at boot"
 echo "Closing set_program_boot.sh"
 exit 0
 
+  
