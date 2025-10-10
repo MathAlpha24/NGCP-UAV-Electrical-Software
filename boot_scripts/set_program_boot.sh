@@ -1,5 +1,4 @@
 #!/bin/bash
-#DO NOT USE
 #Run the script with the program_path as an argument
 
 # 1. SET VARIABLES
@@ -44,8 +43,7 @@ cat > "$DESKTOP_FILE" <<EOF
 [Desktop Entry]
 Type=Application
 Exec=gnome-terminal -- $PROGRAM_PATH
-Hidden=false
-NoDisplay=false
+
 X-GNOME-Autostart-enabled=true
 Name=$PROGRAM_NAME
 Comment=Autostart $PROGRAM_NAME at login

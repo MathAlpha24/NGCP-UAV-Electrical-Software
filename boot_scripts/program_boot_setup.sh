@@ -1,5 +1,5 @@
 #!/bin/bash
-
+#DO NOT USE
 # Usage:
 #   Add a program to run at boot:
 #     sudo ./service_manager.sh add /full/path/to/program
