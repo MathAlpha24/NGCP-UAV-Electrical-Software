@@ -1,5 +1,5 @@
 #!/bin/bash
-
+#DO NOT USE
 #Run the script with the program_path as an argument
 
 # 1. SET VARIABLES
